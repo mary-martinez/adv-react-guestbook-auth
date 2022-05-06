@@ -11,7 +11,8 @@ export async function getEntries() {
 export async function createEntry({ userId, content }) {
   const request = await client
     .from('entries')
-    .insert({ guest_id: userId, content });
+    .insert({ guest_id: userId, content })
+    .single();
   return parseData(request);
 }
 

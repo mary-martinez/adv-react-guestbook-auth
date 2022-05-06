@@ -6,8 +6,8 @@ import { getUser } from '../services/user';
 const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState(getUser());
-  const [userId, setUserId] = useState('');
+  const [currentUser, setCurrentUser] = useState(getUser().email);
+  const [userId, setUserId] = useState(getUser().id);
 
   return (<UserContext.Provider value={{ currentUser, setCurrentUser, userId, setUserId }}>{children}</UserContext.Provider>);
 };
