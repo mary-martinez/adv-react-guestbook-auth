@@ -5,7 +5,7 @@ import { useUserContext } from '../context/UserContext';
 import { signInUser, signUpUser } from '../services/user';
 
 export default function AuthView() {
-  const { setCurrentUser } = useUserContext();
+  const { setCurrentUser, setUserId } = useUserContext();
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [authType, setAuthType] = useState('login');
@@ -16,12 +16,14 @@ export default function AuthView() {
     try {
       if (authType === 'login') {
         const data = await signInUser({ email, password });
+        // console.log('data', data);
         setCurrentUser(data.email);
+        setUserId(data.id);
       } else {
         const data = await signUpUser({ email, password });
         setCurrentUser(data.email);
       }
-      history.replace('/');
+      // history.replace('/');
     } catch (e) {
       setError(e.message);
     }
