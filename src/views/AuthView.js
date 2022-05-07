@@ -12,18 +12,23 @@ export default function AuthView() {
   const [error, setError] = useState('');
   const history = useHistory();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async () => {
     try {
       if (authType === 'login') {
         const data = await signInUser({ email, password });
-        setCurrentUser(data.email);
+        setCurrentUser(data);
         setUserId(data.id);
+        history.push('/');
+
       } else {
         const data = await signUpUser({ email, password });
         setCurrentUser(data.email);
         setUserId(data.id);
+        history.push('/');
+
       }
-      history.replace('/');
+      console.log('why not pushing');
+      // history.push('/');
     } catch (e) {
       setError(e.message);
     }
@@ -49,7 +54,7 @@ export default function AuthView() {
         Password
         <input type={'password'} value={password} onChange={(e) => setPassword(e.target.value)} />
       </label>
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={() => handleSubmit()}>Submit</button>
       {error && <p>{error}</p>}
     </>
   );

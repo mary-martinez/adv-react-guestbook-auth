@@ -1,4 +1,5 @@
 import { Route, Switch } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute';
 import AuthView from './views/AuthView';
 import Home from './views/Home';
 
@@ -10,9 +11,9 @@ export default function App() {
         <Route path={'/login'}>
           <AuthView />
         </Route>
-        <Route exact path={'/'}>
+        <PrivateRoute exact path={'/'}>
           <Home />
-        </Route>
+        </PrivateRoute>
       </Switch>
     </>
   );
