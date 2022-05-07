@@ -7,12 +7,11 @@ import TextForm from '../components/TextForm';
 import { useUserContext } from '../context/UserContext';
 import { createEntry, getEntries } from '../services/entries';
 import { getUser, signOutUser } from '../services/user';
+import Header from './Header';
 
 export default function Home() {
-  const { userId, setUserId, setCurrentUser, currentUser } = useUserContext();
+  const { currentUser } = useUserContext();
   const [error, setError] = useState('');
-  const [tempText, setTempText] = useState();
-  const history = useHistory();
   const [entries, setEntries] = useState([]);
   const [text, setText] = useState('');
 
@@ -37,27 +36,19 @@ export default function Home() {
     }
   };
 
-  const handleLogout = async () => {
-    await signOutUser();
-    setCurrentUser({});
-    setUserId('');
-    history.replace('/login');
-  };
+
 
   return (
     <>
-      <button onClick={handleLogout}>logout</button>
+      <Header />
       {error && <p>{error}</p>}
-      {/* input for guestbook entries */}
       <TextForm {...{ handleText, setText, text }} />
       {entries.map((entry) => (
         <div key={entry.id}>
           <h3>{entry.content}</h3>
           <p>from: {currentUser.email}</p>
-
         </div>
       ))}
-      {/* list out whats stored in supabase */}
     </>
   );
 }
